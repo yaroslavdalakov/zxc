@@ -1,16 +1,31 @@
-import pickle
+with open('lyrics.txt', encoding="utf8") as f:
+    lyrics = f.read()
 
-game_data = [
-    ('Name','Mike'),
-    ('Class',"Barbarian"),
-    ('Items', ['club','shield']),
-    ('xp', 9000)
-]
+print(lyrics)
+print(type(lyrics))
 
-with open('save.dat','wb') as sf:
-    pickle.dump(game_data, sf)
+for w in lyrics:
+    print(w)
 
-with open('save.dat','rb') as lf:
-    load_data = pickle.load(lf)
+lyrics_list = []
+banned = [' ','.',',','!']
+lyrics_word = ''
 
-    print(load_data)
+for w in lyrics:
+    w = w.lower()
+    if w == '\n':
+        if lyrics_word:
+            lyrics_list.append(lyrics_word)
+            lyrics_word = ''
+    elif w not in banned:
+        lyrics_word += w
+    else:
+        if lyrics_word:
+            lyrics_list.append(lyrics_word)
+        lyrics_word = ''
+
+if lyrics_word:
+    lyrics_list.append(lyrics_word)
+    lyrics_word = ''
+ 
+print(lyrics_list)
